@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>ميزانيتي قبل الاستثمار</title>
+  <style>
+    :root{
+      --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#64748b;
+      --line:#e2e8f0; --accent:#0f766e; --accent2:#14b8a6;
+      --good:#166534; --warn:#a16207; --bad:#b91c1c; --info:#1d4ed8;
+      --shadow:0 10px 28px rgba(15,23,42,.08); --radius:20px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1100px;margin:auto;padding:18px}
+    header{background:linear-gradient(135deg,#0f172a,#134e4a);color:#fff;padding:26px;border-radius:24px;box-shadow:var(--shadow);margin-bottom:18px}
+    h1{margin:0 0 8px;font-size:clamp(28px,5vw,46px)}
+    header p{margin:0;color:#d1fae5;line-height:1.8}
+    .privacy{margin-top:14px;display:inline-block;background:rgba(255,255,255,.12);padding:9px 12px;border-radius:999px;font-size:13px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .card{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    @media(min-width:800px){.half{grid-column:span 6}.third{grid-column:span 4}.twoThird{grid-column:span 8}}
+    h2{font-size:19px;margin:0 0 14px}
+    h3{margin:16px 0 10px;font-size:16px}
+    .field{display:grid;grid-template-columns:1fr 150px;gap:8px;align-items:center;margin:8px 0}
+    .field label{font-size:14px}
+    input,select,button{font:inherit}
+    input[type=number],input[type=text],select{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:11px;background:#fff;color:#0f172a}
+    input:focus,select:focus{outline:2px solid #99f6e4;border-color:#14b8a6}
+    .row{display:flex;gap:8px;flex-wrap:wrap}
+    button{border:0;border-radius:12px;padding:11px 14px;cursor:pointer}
+    .primary{background:var(--accent);color:#fff}
+    .secondary{background:#e2e8f0;color:#0f172a}
+    .danger{background:#fee2e2;color:#991b1b}
+    .ghost{background:#ecfeff;color:#155e75}
+    .metric{border:1px solid var(--line);border-radius:16px;padding:14px}
+    .metric .label{font-size:13px;color:var(--muted)}
+    .metric .value{font-size:26px;font-weight:800;margin-top:5px}
+    .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    @media(min-width:800px){.metrics{grid-template-columns:repeat(4,1fr)}}
+    .status{border-radius:16px;padding:16px;margin-top:12px;line-height:1.9;font-weight:600}
+    .status.good{background:#dcfce7;color:#14532d}
+    .status.warn{background:#fef3c7;color:#78350f}
+    .status.bad{background:#fee2e2;color:#7f1d1d}
+    .status.info{background:#dbeafe;color:#1e3a8a}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle}
+    th{font-size:13px;color:var(--muted)}
+    td input{min-width:100px}
+    .small{font-size:12px;color:var(--muted);line-height:1.7}
+    .pill{display:inline-block;border-radius:999px;padding:5px 9px;background:#f1f5f9;font-size:12px;margin:3px}
+    .bar{height:12px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin-top:8px}
+    .bar>div{height:100%;background:linear-gradient(90deg,#14b8a6,#0f766e);width:0}
+    footer{padding:22px 2px;color:#64748b;font-size:12px;line-height:1.8}
+    .sectionTitle{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .emptyHint{padding:10px;border:1px dashed #cbd5e1;border-radius:12px;color:var(--muted);font-size:13px}
+    @media(max-width:600px){
+      .field{grid-template-columns:1fr}
+      th:nth-child(3),td:nth-child(3){display:none}
+      .wrap{padding:10px}
+      header,.card{border-radius:16px}
+    }
+    @media print{
+      body{background:white}
+      header,.card{box-shadow:none}
+      .noPrint{display:none!important}
+      .wrap{max-width:none}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ميزانيتي قبل الاستثمار</h1>
+    <p>اعرف أين تذهب أموالك أولاً، ثم حدّد قدرتك الحقيقية على الادخار والاستثمار بدون الضغط على احتياجاتك الأساسية.</p>
+    <div class="privacy">🔒 بياناتك محفوظة على هذا الجهاز فقط</div>
+  </header>
+
+  <div class="grid">
+    <section class="card half">
+      <h2>1) بياناتك المالية الشهرية</h2>
+      <div class="field"><label>الراتب الصافي</label><input id="salary" type="number" min="0" step="100" placeholder="0"></div>
+      <div class="field"><label>دخل إضافي ثابت</label><input id="extraIncome" type="number" min="0" step="100" placeholder="0"></div>
+      <div class="field"><label>دخل متغير تقديري</label><input id="variableIncome" type="number" min="0" step="100" placeholder="0"></div>
+      <div class="small">يفضل عدم الاعتماد على الدخل المتغير في الالتزامات الأساسية إذا لم يكن مضموناً.</div>
+    </section>
+
+    <section class="card half">
+      <h2>2) أهدافك</h2>
+      <div class="field"><label>هدف صندوق الطوارئ بالأشهر</label>
+        <select id="emergencyMonths">
+          <option value="3">3 أشهر</option>
+          <option value="6" selected>6 أشهر</option>
+          <option value="9">9 أشهر</option>
+          <option value="12">12 شهراً</option>
+        </select>
+      </div>
+      <div class="field"><label>رصيد صندوق الطوارئ الحالي</label><input id="emergencyCurrent" type="number" min="0" step="100" placeholder="0"></div>
+      <div class="field"><label>المبلغ الذي ترغب باستثماره شهرياً</label><input id="plannedInvestment" type="number" min="0" step="100" placeholder="0"></div>
+      <div class="field"><label>المبلغ الذي ترغب بادخاره شهرياً</label><input id="plannedSaving" type="number" min="0" step="100" placeholder="0"></div>
+    </section>
+
+    <section class="card">
+      <div class="sectionTitle">
+        <h2>3) الالتزامات والمصاريف</h2>
+        <button class="ghost noPrint" onclick="addCustom()">+ إضافة بند</button>
+      </div>
+      <table>
+        <thead><tr><th>البند</th><th>المبلغ الشهري</th><th>النوع</th><th class="noPrint">حذف</th></tr></thead>
+        <tbody id="expenseRows"></tbody>
+      </table>
+      <div class="small">حوّل المصروفات السنوية إلى مبلغ شهري. مثال: تأمين سيارة 2,400 سنوياً = 200 شهرياً.</div>
+    </section>
+
+    <section class="card">
+      <h2>4) ملخص وضعك الآن</h2>
+      <div class="metrics">
+        <div class="metric"><div class="label">إجمالي الدخل</div><div class="value" id="mIncome">0</div></div>
+        <div class="metric"><div class="label">المصاريف الأساسية</div><div class="value" id="mEssential">0</div></div>
+        <div class="metric"><div class="label">إجمالي المصروفات</div><div class="value" id="mExpenses">0</div></div>
+        <div class="metric"><div class="label">الفائض قبل الادخار والاستثمار</div><div class="value" id="mSurplus">0</div></div>
+      </div>
+      <div id="statusBox" class="status info">أدخل بياناتك لرؤية التقييم.</div>
+    </section>
+
+    <section class="card half">
+      <h2>5) مؤشرات تساعدك على القرار</h2>
+      <div class="field"><label>نسبة المصروفات من الدخل</label><strong id="expenseRatio">0%</strong></div>
+      <div class="bar"><div id="expenseBar"></div></div>
+      <div class="field"><label>نسبة الادخار المخطط</label><strong id="savingRatio">0%</strong></div>
+      <div class="field"><label>نسبة الاستثمار المخطط</label><strong id="investmentRatio">0%</strong></div>
+      <div class="field"><label>الفائض بعد خطتك</label><strong id="afterPlan">0</strong></div>
+    </section>
+
+    <section class="card half">
+      <h2>6) صندوق الطوارئ</h2>
+      <div class="field"><label>الهدف المطلوب</label><strong id="emergencyTarget">0</strong></div>
+      <div class="field"><label>المتبقي للوصول للهدف</label><strong id="emergencyGap">0</strong></div>
+      <div class="field"><label>نسبة الإنجاز</label><strong id="emergencyProgress">0%</strong></div>
+      <div class="bar"><div id="emergencyBar"></div></div>
+      <div class="small">المبلغ المقترح يحسب على أساس المصروفات الأساسية الشهرية × عدد الأشهر الذي تختاره.</div>
+    </section>
+
+    <section class="card">
+      <h2>7) قراءة مبسطة لوضعك</h2>
+      <div id="insights" class="emptyHint">بعد إدخال الأرقام، سيظهر هنا ملخص يساعدك في فهم وضعك المالي قبل الاستثمار.</div>
+    </section>
+
+    <section class="card noPrint">
+      <h2>حفظ ونسخ احتياطي</h2>
+      <div class="row">
+        <button class="primary" onclick="saveData()">حفظ على الجهاز</button>
+        <button class="secondary" onclick="exportData()">تصدير نسخة احتياطية</button>
+        <label class="secondary" style="padding:11px 14px;border-radius:12px;cursor:pointer">
+          استيراد نسخة
+          <input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(event)">
+        </label>
+        <button class="secondary" onclick="window.print()">طباعة / حفظ PDF</button>
+        <button class="danger" onclick="resetData()">مسح البيانات</button>
+      </div>
+      <div class="small" style="margin-top:12px">التخزين محلي داخل المتصفح. إذا مسحت بيانات المتصفح أو غيّرت الجهاز، استخدم التصدير للاحتفاظ بنسخة احتياطية.</div>
+    </section>
+  </div>
+
+  <footer>
+    هذه الأداة تعليمية لتنظيم الميزانية الشخصية، وليست توصية استثمارية أو مالية شخصية. قرار الاستثمار يعتمد أيضاً على مستوى المخاطر، الأهداف، الالتزامات، المدة الزمنية والظروف الفردية.
+  </footer>
+</div>
+
+<script>
+const DEFAULT_EXPENSES = [
+  ["السكن / الإيجار أو القسط","أساسي"],
+  ["الكهرباء والماء","أساسي"],
+  ["الهاتف والإنترنت","أساسي"],
+  ["القروض والأقساط","أساسي"],
+  ["راتب العمالة المنزلية","أساسي"],
+  ["المواد الغذائية","أساسي"],
+  ["الوقود والمواصلات","أساسي"],
+  ["مصاريف الأبناء / الدراسة","أساسي"],
+  ["التأمين والصحة والأدوية","أساسي"],
+  ["صيانة السيارة","أساسي"],
+  ["رسوم وتجديدات سنوية","أساسي"],
+  ["المطاعم والقهوة","مرن"],
+  ["الترفيه والتسوق","مرن"],
+  ["السفر والإجازات","مرن"],
+  ["اشتراكات رقمية","مرن"],
+  ["هدايا ومناسبات","مرن"]
+];
+
+let expenses = [];
+
+function money(v){
+  return new Intl.NumberFormat('ar-AE',{maximumFractionDigits:0}).format(Number(v||0)) + " د.إ";
+}
+function num(id){ return Number(document.getElementById(id).value || 0); }
+
+function renderExpenses(){
+  const body=document.getElementById("expenseRows");
+  body.innerHTML="";
+  expenses.forEach((e,i)=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`
+      <td><input type="text" value="${escapeHtml(e.name)}" oninput="expenses[${i}].name=this.value; recalc()"></td>
+      <td><input type="number" min="0" step="50" value="${e.amount||''}" placeholder="0" oninput="expenses[${i}].amount=Number(this.value||0); recalc()"></td>
+      <td>
+        <select onchange="expenses[${i}].type=this.value; recalc()">
+          <option value="أساسي" ${e.type==="أساسي"?"selected":""}>أساسي</option>
+          <option value="مرن" ${e.type==="مرن"?"selected":""}>مرن</option>
+        </select>
+      </td>
+      <td class="noPrint"><button class="danger" onclick="expenses.splice(${i},1);renderExpenses();recalc()">×</button></td>`;
+    body.appendChild(tr);
+  });
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function addCustom(){expenses.push({name:"بند جديد",amount:0,type:"مرن"});renderExpenses();recalc();}
+
+function collect(){
+  return {
+    salary:num("salary"),extraIncome:num("extraIncome"),variableIncome:num("variableIncome"),
+    emergencyMonths:num("emergencyMonths"),emergencyCurrent:num("emergencyCurrent"),
+    plannedInvestment:num("plannedInvestment"),plannedSaving:num("plannedSaving"),
+    expenses
+  };
+}
+
+function recalc(){
+  const income=num("salary")+num("extraIncome")+num("variableIncome");
+  const essential=expenses.filter(e=>e.type==="أساسي").reduce((s,e)=>s+Number(e.amount||0),0);
+  const flexible=expenses.filter(e=>e.type==="مرن").reduce((s,e)=>s+Number(e.amount||0),0);
+  const total=essential+flexible;
+  const surplus=income-total;
+  const saving=num("plannedSaving"), investing=num("plannedInvestment");
+  const after=surplus-saving-investing;
+
+  document.getElementById("mIncome").textContent=money(income);
+  document.getElementById("mEssential").textContent=money(essential);
+  document.getElementById("mExpenses").textContent=money(total);
+  document.getElementById("mSurplus").textContent=money(surplus);
+  const er=income?total/income*100:0;
+  const sr=income?saving/income*100:0;
+  const ir=income?investing/income*100:0;
+  document.getElementById("expenseRatio").textContent=er.toFixed(0)+"%";
+  document.getElementById("savingRatio").textContent=sr.toFixed(0)+"%";
+  document.getElementById("investmentRatio").textContent=ir.toFixed(0)+"%";
+  document.getElementById("afterPlan").textContent=money(after);
+  document.getElementById("expenseBar").style.width=Math.min(100,er)+"%";
+
+  const months=num("emergencyMonths")||6;
+  const target=essential*months;
+  const current=num("emergencyCurrent");
+  const gap=Math.max(0,target-current);
+  const prog=target?Math.min(100,current/target*100):0;
+  document.getElementById("emergencyTarget").textContent=money(target);
+  document.getElementById("emergencyGap").textContent=money(gap);
+  document.getElementById("emergencyProgress").textContent=prog.toFixed(0)+"%";
+  document.getElementById("emergencyBar").style.width=prog+"%";
+
+  const status=document.getElementById("statusBox");
+  if(!income){status.className="status info";status.textContent="أدخل دخلك ومصاريفك لرؤية التقييم."; }
+  else if(surplus<0){status.className="status bad";status.textContent="مصروفاتك أعلى من دخلك. الأولوية الآن لإعادة التوازن وتقليل العجز قبل زيادة الاستثمار."; }
+  else if(after<0){status.className="status warn";status.textContent="خطتك الحالية للادخار والاستثمار أكبر من الفائض المتاح. خفّض المبلغ المخطط أو راجع المصروفات."; }
+  else if(er>=85){status.className="status warn";status.textContent="هامش الأمان منخفض لأن معظم الدخل يذهب للمصاريف. الاستثمار ممكن فقط بعد التأكد من السيولة وصندوق الطوارئ."; }
+  else if(gap>0 && investing>0){status.className="status warn";status.textContent="لديك فائض، لكن صندوق الطوارئ لم يكتمل بعد. راجع التوازن بين بناء الاحتياطي والاستثمار."; }
+  else if(surplus>0){status.className="status good";status.textContent="لديك فائض شهري مبدئي. تأكد من صندوق الطوارئ والالتزامات قبل تحديد المبلغ المناسب للاستثمار."; }
+  else {status.className="status info";status.textContent="أكمل إدخال بياناتك للحصول على قراءة أوضح."; }
+
+  const ins=[];
+  if(income){
+    ins.push(`دخلك الشهري المسجل هو <strong>${money(income)}</strong>.`);
+    ins.push(`المصاريف الأساسية تشكل <strong>${(income?essential/income*100:0).toFixed(0)}%</strong> من الدخل، وإجمالي المصروفات يشكل <strong>${er.toFixed(0)}%</strong>.`);
+    if(surplus>=0) ins.push(`الفائض قبل الادخار والاستثمار هو <strong>${money(surplus)}</strong>.`);
+    else ins.push(`يوجد عجز شهري مقداره <strong>${money(Math.abs(surplus))}</strong>.`);
+    if(target>0) ins.push(`هدف صندوق الطوارئ حسب اختيارك هو <strong>${money(target)}</strong>، والمتبقي <strong>${money(gap)}</strong>.`);
+    if(investing>0) ins.push(`مبلغ الاستثمار المخطط يشكل <strong>${ir.toFixed(0)}%</strong> من دخلك.`);
+    if(after>=0) ins.push(`بعد الادخار والاستثمار المخططين، يبقى لديك <strong>${money(after)}</strong>.`);
+  }
+  document.getElementById("insights").innerHTML = ins.length ? ins.map(x=>`<span class="pill">${x}</span>`).join(" ") : "بعد إدخال الأرقام، سيظهر هنا ملخص يساعدك في فهم وضعك المالي قبل الاستثمار.";
+
+  autosave();
+}
+
+function saveData(){
+  localStorage.setItem("budget_before_investing_v1",JSON.stringify(collect()));
+  alert("تم حفظ بياناتك على هذا الجهاز.");
+}
+function autosave(){
+  try{localStorage.setItem("budget_before_investing_v1",JSON.stringify(collect()));}catch(e){}
+}
+function loadData(){
+  const raw=localStorage.getItem("budget_before_investing_v1");
+  if(raw){
+    try{
+      const d=JSON.parse(raw);
+      ["salary","extraIncome","variableIncome","emergencyMonths","emergencyCurrent","plannedInvestment","plannedSaving"].forEach(k=>{
+        if(d[k]!==undefined) document.getElementById(k).value=d[k];
+      });
+      expenses=Array.isArray(d.expenses)?d.expenses:[];
+    }catch(e){}
+  }
+  if(!expenses.length) expenses=DEFAULT_EXPENSES.map(([name,type])=>({name,amount:0,type}));
+  renderExpenses(); recalc();
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify(collect(),null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="نسخة-ميزانيتي.json";
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function importData(ev){
+  const f=ev.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const d=JSON.parse(r.result);
+      localStorage.setItem("budget_before_investing_v1",JSON.stringify(d));
+      location.reload();
+    }catch(e){alert("الملف غير صالح.");}
+  };
+  r.readAsText(f);
+}
+function resetData(){
+  if(confirm("هل تريد مسح جميع البيانات المحفوظة على هذا الجهاز؟")){
+    localStorage.removeItem("budget_before_investing_v1");
+    location.reload();
+  }
+}
+
+["salary","extraIncome","variableIncome","emergencyMonths","emergencyCurrent","plannedInvestment","plannedSaving"]
+  .forEach(id=>document.getElementById(id).addEventListener("input",recalc));
+
+loadData();
+</script>
+</body>
+</html>
