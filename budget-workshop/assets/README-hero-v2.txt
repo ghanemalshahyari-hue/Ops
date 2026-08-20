@@ -1,0 +1,1 @@
+Hero v2 source is the user-uploaded ENTWA cup/notebook photo. Binary asset is committed separately through Git blob API.
